@@ -5,7 +5,7 @@ const { SystemProgram } = anchor.web3;
 async function createBlog(program, provider) {
   const initBlogAccount = anchor.web3.Keypair.generate();
   const genesisPostAccount = anchor.web3.Keypair.generate();
-  
+
   // E2KkH77dTAqApKcDAtSEjeniGLnrSLEUScM5i5DMrY7E
   await program.rpc.initBlog({
     accounts: {
