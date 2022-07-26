@@ -1,27 +1,32 @@
 import styled from '@emotion/styled';
 import type { NextPage } from 'next';
-import Head from 'next/head';
+import { ConnectionProvider, WalletProvider } from '@solana/wallet-adapter-react';
+import { getPhantomWallet } from '@solana/wallet-adapter-wallets';
+import Main from '@src/components/Main';
 
-const Feed: NextPage = () => {
+const endPoint = 'http://127.0.0.1:8899';
+
+const Home: NextPage = () => {
+  const wallets = [getPhantomWallet()];
   return (
-    <Styled.Page>
-      <Head>
-        <title>SOPTstagram</title>
-        <meta name="description" content="SOPTstagram" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      메인입니다
-    </Styled.Page>
+    <ConnectionProvider endpoint={endPoint}>
+      <WalletProvider wallets={wallets} autoConnect>
+        <Styled.Page>
+          <Main />
+        </Styled.Page>
+      </WalletProvider>
+    </ConnectionProvider>
   );
 };
 
-export default Feed;
+export default Home;
 
 const Styled = {
   Page: styled.div`
     width: 100vw;
-    & > * {
-      width: 100%;
-    }
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   `,
 };
