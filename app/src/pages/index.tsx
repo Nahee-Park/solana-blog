@@ -1,13 +1,17 @@
 import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { ConnectionProvider, WalletProvider } from '@solana/wallet-adapter-react';
-import { getPhantomWallet } from '@solana/wallet-adapter-wallets';
+import { PhantomWalletAdapter } from '@solana/wallet-adapter-wallets';
+import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
 import Main from '@src/components/Main';
-
-const endPoint = 'http://127.0.0.1:8899';
+import { clusterApiUrl } from '@solana/web3.js';
+import React, { useMemo } from 'react';
 
 const Home: NextPage = () => {
-  const wallets = [getPhantomWallet()];
+  const endPoint = 'http://127.0.0.1:8899';
+  const network = WalletAdapterNetwork.Devnet;
+  const wallets = useMemo(() => [new PhantomWalletAdapter()], [network]);
+
   return (
     <ConnectionProvider endpoint={endPoint}>
       <WalletProvider wallets={wallets} autoConnect>
